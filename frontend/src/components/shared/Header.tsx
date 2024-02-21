@@ -1,5 +1,9 @@
+import Navigation from "../Navigation";
+
 export default function Header() {
   return (
-    <div className="mt-5 text-blue-700 font-bold">Header</div>
+    <header className="flex flex-col items-center w-60 h-[100vh] bg-blue-950">
+      <Navigation />
+    </header>
   )
 }
