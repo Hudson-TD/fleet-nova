@@ -4,6 +4,6 @@ import cors from "cors";
 const app = express();
 const CORS = cors();
 app.use(CORS);
-app.use("/api/v1", appRouter);
+app.use("/", appRouter);
 export default app;
 //# sourceMappingURL=app.js.map
