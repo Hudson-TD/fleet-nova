@@ -1,5 +1,5 @@
 export default function Header() {
   return (
-    <div className="border border-black/25">Header</div>
+    <div className="mt-5 text-blue-700 font-bold">Header</div>
   )
 }
