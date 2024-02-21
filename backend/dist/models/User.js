@@ -8,6 +8,12 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        index: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
     },
     account_type: {
         type: String,
@@ -15,5 +21,5 @@ const userSchema = new mongoose.Schema({
     },
     fleet: [{ type: mongoose.Schema.Types.ObjectId, ref: "Vehicle" }],
 });
-export const User = new mongoose.Model("User", userSchema);
+export const User = mongoose.model("User", userSchema);
 //# sourceMappingURL=User.js.map

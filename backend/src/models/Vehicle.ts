@@ -40,4 +40,4 @@ const vehicleSchema = new mongoose.Schema({
   ],
 });
 
-export const Vehicle = new mongoose.Model("Vehicle", vehicleSchema);
+export const Vehicle = mongoose.model("Vehicle", vehicleSchema);

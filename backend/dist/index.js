@@ -1,8 +1,8 @@
 import app from "./app.js";
-import { databaseStartup } from "./configs/database.js";
-function init() {
+import { connectToDatabase } from "./configs/database.js";
+async function init() {
     try {
-        databaseStartup();
+        connectToDatabase();
         app.listen(3000, () => {
             console.log("Server running on http://localhost:3000");
         });
