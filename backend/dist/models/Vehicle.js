@@ -8,6 +8,7 @@ const vehicleTypeEnum = [
     "Bus",
     "SUV",
     "Covertible",
+    "Other",
 ];
 const vehicleSchema = new mongoose.Schema({
     make: {
@@ -34,7 +35,7 @@ const vehicleSchema = new mongoose.Schema({
     maintenance_history: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Vehicle",
+            ref: "MaintenanceItem",
         },
     ],
 });

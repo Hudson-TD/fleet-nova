@@ -1,9 +1,6 @@
 import { Router } from "express";
+import { addFleetAsset, getUserFleet } from "../controllers/fleet-controllers.js";
 export const fleetRoutes = Router();
-fleetRoutes.get("/", (req, res, next) => {
-    res.json({ message: "You hit the fleet route." });
-});
-fleetRoutes.get("/:id", (req, res, next) => {
-    res.json({ message: "You hit the user fleet route." });
-});
+fleetRoutes.get("/:id", getUserFleet);
+fleetRoutes.post("/:id/add", addFleetAsset);
 //# sourceMappingURL=fleet-routes.js.map
