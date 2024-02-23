@@ -19,6 +19,10 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    model_year: {
+        type: String,
+        required: true,
+    },
     exterior_color: {
         type: String,
     },

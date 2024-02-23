@@ -25,7 +25,7 @@ export async function getUserFleet(req: Request, res: Response) {
 
 export async function addFleetAsset(req: Request, res: Response) {
   const id = req.params.id;
-  const { make, model } = req.body;
+  const { make, model, model_year } = req.body;
   try {
     const user = await User.findById(id);
 
@@ -39,6 +39,7 @@ export async function addFleetAsset(req: Request, res: Response) {
     const newAsset = new Vehicle({
       make,
       model,
+      model_year,
     });
 
     // Save the new asset data
