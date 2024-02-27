@@ -24,7 +24,7 @@ export default function Signup() {
   return (
     <main>
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="flex flex-col justify-center items-center bg-slate-200 w-[40rem] h-[45rem] border border-white rounded-2xl">
+        <div className="flex flex-col justify-center items-center bg-slate-200 w-[40rem] h-[45rem] border border-white rounded-2xl shadow-lg">
           <h1 className="mb-20 text-3xl font-bold">NovaFleet</h1>
           <form
             className="flex flex-col justify-center gap-5 w-full h-[60%] p-5"
@@ -68,6 +68,7 @@ export default function Signup() {
             >
               Create Account
             </button>
+            <a className="text-center underline" href="/login">Already have an account? Login here.</a>
           </form>
         </div>
       </div>
