@@ -1,12 +1,15 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { redirect } from "react-router-dom";
 
-export async function getUserFleet(id: string) {
+export async function getUserFleet() {
+  const token = sessionStorage.getItem("auth");
+
   try {
-    const response = await axios.get(
-      `http://localhost:3000/fleets/${id}/assets`
-    );
+    const response = await axios.get(`http://localhost:3000/fleet/assets`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     throw new Error("Error fetching fleet data.");
@@ -26,10 +29,11 @@ export async function userSignup(
     password,
   };
 
+  console.log(payload);
+
   try {
-    let fleetId = "";
     const signupPromise = toast.promise(
-      axios.post("http://localhost:3000/users/signup", payload),
+      axios.post("http://localhost:3000/user/signup", payload),
       {
         loading: "Building user...",
         success: "Success, welcome to the club!",
@@ -37,12 +41,15 @@ export async function userSignup(
       }
     );
 
-    signupPromise.then((res) => {
-      fleetId = res.data.user_id;
-      window.location.href = `/fleets/${fleetId}/assets`;
+    await signupPromise;
+
+    signupPromise.then(async (res) => {
+      sessionStorage.removeItem("auth");
+      sessionStorage.setItem("auth", res.data.token);
+      window.location.href = `/fleet/assets`;
     });
   } catch (error) {
-    console.error("Error", error);
+    console.error("Error during signup:", error);
   }
 }
 
@@ -52,12 +59,9 @@ export async function userLogin(email: string, password: string) {
     password,
   };
 
-  console.log(payload);
-
   try {
-    let fleetId = "";
     const loginPromise = toast.promise(
-      axios.post("http://localhost:3000/users/login", payload),
+      axios.post("http://localhost:3000/user/login", payload),
       {
         loading: "Powering on...",
         success: "Success, welcome back!",
@@ -65,9 +69,10 @@ export async function userLogin(email: string, password: string) {
       }
     );
 
-    loginPromise.then((res) => {
-      fleetId = res.data.user_id;
-      window.location.href = `/fleets/${fleetId}/assets`;
+    loginPromise.then(async (res) => {
+      sessionStorage.removeItem("auth");
+      sessionStorage.setItem("auth", res.data.token);
+      window.location.href = "/fleet/assets";
     });
   } catch (error) {
     console.error("Error", error);

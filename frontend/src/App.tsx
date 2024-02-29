@@ -20,7 +20,7 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/fleets/:id/assets",
+      path: "/fleet/assets",
       element: <Fleet />,
     },
   ]);

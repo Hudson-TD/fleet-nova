@@ -3,7 +3,7 @@ import { User } from "../models/User.js";
 import { Vehicle } from "../models/Vehicle.js";
 
 export async function getUserFleet(req: Request, res: Response) {
-  const id = req.params.id;
+  const id = req.user;
   try {
     const user = await User.findById(id).populate("fleet");
 

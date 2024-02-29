@@ -1,35 +1,33 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 export async function createNewUserAccount(req, res) {
     try {
-        const { name, email, password } = req.body;
+        const { first_name, last_name, email, password } = req.body;
         const user = await User.findOne({ email });
         if (user) {
             return res.status(409).send({
                 status: "Conflict",
-                message: "Email provided is already associated with an account.",
+                message: "The provided email is already in use.",
             });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
-            name,
+            first_name,
+            last_name,
             email,
             password: hashedPassword,
         });
         await newUser.save();
-        return res.status(201).send({
+        const token = jwt.sign({ id: newUser._id, username: newUser.first_name }, process.env.TOKEN_SECRET);
+        return res.status(200).send({
             status: "Success",
-            message: "New user account created successfully.",
+            message: "Account creation successful.",
+            token,
         });
     }
     catch (error) {
-        console.error("Error creating user:", error);
-        return res.status(500).send({
-            status: "Error",
-            error: {
-                message: "Internal server error. Please try again later.",
-            },
-        });
+        return res.status(500).send({ error: error });
     }
 }
 export async function userAccountLogin(req, res) {
@@ -43,12 +41,18 @@ export async function userAccountLogin(req, res) {
             });
         }
         const validatedPassword = await bcrypt.compare(password, user.password);
-        if (validatedPassword) {
-            return res.status(201).send({
-                status: "Success",
-                message: "Credentials validated successfully.",
+        if (!validatedPassword) {
+            return res.status(401).send({
+                status: "Error",
+                message: "Invalid credentials, please double check and try again.",
             });
         }
+        const token = jwt.sign({ id: user._id, username: user.first_name }, process.env.TOKEN_SECRET);
+        return res.status(200).send({
+            status: "Success",
+            message: "Login successful.",
+            token,
+        });
     }
     catch (error) {
         console.error("Error loging in user:", error);

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Create the AuthContext
 const AuthContext = createContext(null);
@@ -12,21 +12,25 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = () => {
-    setIsLoggedIn(true);
-  };
-
   const logout = () => {
-    // Implement your logout logic here
+    sessionStorage.removeItem("auth");
     setIsLoggedIn(false);
+    window.location.href = "/";
   };
 
   // Provide the auth state and methods to the context
   const authContextValue = {
     isLoggedIn,
-    login,
     logout,
   };
+
+  useEffect(() => {
+    const loginStatus = sessionStorage.getItem("auth");
+
+    if (loginStatus) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={authContextValue}>
