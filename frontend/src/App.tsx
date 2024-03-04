@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Fleet from "./pages/Fleet";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Add from "./pages/Add";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
     {
       path: "/fleet/assets",
       element: <Fleet />,
+    },
+    {
+      path: "/fleet/add",
+      element: <Add />,
     },
   ]);
 

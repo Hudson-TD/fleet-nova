@@ -8,4 +8,4 @@ import { checkAuthToken } from "../middleware/authentication.js";
 export const fleetRoutes = Router();
 
 fleetRoutes.get("/assets", checkAuthToken, getUserFleet);
-fleetRoutes.post("/assets/add", addFleetAsset);
+fleetRoutes.post("/assets/add", checkAuthToken, addFleetAsset);

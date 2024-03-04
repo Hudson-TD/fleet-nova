@@ -29,8 +29,6 @@ export async function userSignup(
     password,
   };
 
-  console.log(payload);
-
   try {
     const signupPromise = toast.promise(
       axios.post("http://localhost:3000/user/signup", payload),
@@ -76,5 +74,29 @@ export async function userLogin(email: string, password: string) {
     });
   } catch (error) {
     console.error("Error", error);
+  }
+}
+
+export async function addFleetAsset(asset) {
+  const token = sessionStorage.getItem("auth");
+  const payload = {
+    ...asset,
+  };
+
+  console.log(payload);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/fleet/assets/add`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error adding new asset", error);
   }
 }

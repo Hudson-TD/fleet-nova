@@ -5,7 +5,9 @@ import { Vehicle } from "../models/Vehicle.js";
 export async function getUserFleet(req: Request, res: Response) {
   const id = req.user;
   try {
-    const user = await User.findById(id).populate("fleet");
+    const user = await User.findById(id).populate({
+      path: "fleet",
+    });
 
     if (!user) {
       res.status(404).send({
@@ -24,8 +26,17 @@ export async function getUserFleet(req: Request, res: Response) {
 }
 
 export async function addFleetAsset(req: Request, res: Response) {
-  const id = req.params.id;
-  const { make, model, model_year } = req.body;
+  const id = req.user;
+  const {
+    make,
+    model,
+    model_year,
+    asset_type,
+    vin,
+    exterior_color,
+    interior_color,
+    purchase_mileage,
+  } = req.body;
   try {
     const user = await User.findById(id);
 
@@ -40,6 +51,11 @@ export async function addFleetAsset(req: Request, res: Response) {
       make,
       model,
       model_year,
+      asset_type,
+      vin,
+      exterior_color,
+      interior_color,
+      purchase_mileage,
     });
 
     // Save the new asset data

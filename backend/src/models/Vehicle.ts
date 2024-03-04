@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const vehicleTypeEnum = [
+const assetTypeEnum = [
   "Coupe",
   "Sedan",
   "Truck",
@@ -27,15 +27,19 @@ const vehicleSchema = new mongoose.Schema({
   exterior_color: {
     type: String,
   },
+  interior_color: {
+    type: String,
+  },
   vin: {
     type: String,
   },
-  vehicle_type: {
+  asset_type: {
     type: String,
-    enum: vehicleTypeEnum,
+    required: true,
+    enum: assetTypeEnum,
   },
   purchase_mileage: {
-    type: String,
+    type: Number,
   },
   maintenance_history: [
     {
@@ -43,6 +47,10 @@ const vehicleSchema = new mongoose.Schema({
       ref: "MaintenanceItem",
     },
   ],
+  archived: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const Vehicle = mongoose.model("Vehicle", vehicleSchema);
